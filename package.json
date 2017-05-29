@@ -1,0 +1,17 @@
+{
+  "name": "Cogworks.SiteLock",
+  "version": "1.0.0",
+  "url": "https://github.com/thecogworks/sitelock",
+  "license": {
+    "name": "MIT",
+    "url": "https://github.com/thecogworks/sitelock/blob/master/LICENSE.md"
+  },
+  "author": {
+    "name": "Cogworks",
+    "url": "http://www.thecogworks.com/"
+  },
+  "readme": "A security package for Umbraco 7. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public site. ",
+  "devDependencies": {
+
+  }
+}
