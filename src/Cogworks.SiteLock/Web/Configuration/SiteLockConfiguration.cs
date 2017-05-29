@@ -15,7 +15,7 @@ namespace Cogworks.SiteLock.Web.Configuration
     public class SiteLockConfiguration : ISiteLockConfiguration
     {
         private static string DomainsKey = typeof(SiteLockConfiguration) + "_domains";
-        private static string IgnorePathsKey = typeof(SiteLockConfiguration) + "_ignorePaths";
+        private static string IgnoredPathsKey = typeof(SiteLockConfiguration) + "_ignoredPaths";
 
 
         public List<string> GetLockedDomains()
@@ -36,13 +36,13 @@ namespace Cogworks.SiteLock.Web.Configuration
 
         public List<string> GetIgnoredPaths()
         {
-            var value = HttpRuntime.Cache[IgnorePathsKey] as List<string>;
+            var value = HttpRuntime.Cache[IgnoredPathsKey] as List<string>;
 
             if (value == null)
             {
                 value = GetValues("ignoredPaths", "path");
 
-                HttpRuntime.Cache.Insert(IgnorePathsKey, value, null);
+                HttpRuntime.Cache.Insert(IgnoredPathsKey, value, null);
             }
 
             return value;
