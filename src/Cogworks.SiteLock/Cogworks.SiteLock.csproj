@@ -44,10 +44,6 @@
     <None Include="Cogworks.SiteLock.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="compilerconfig.json" />
-    <None Include="compilerconfig.json.defaults">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\AssemblyInfo.json" />
     <None Include="Web\UI\Config\SiteLock.config">
@@ -263,7 +259,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web\UI\403.html" />
+    <Content Include="Web\UI\403-sample.html" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
