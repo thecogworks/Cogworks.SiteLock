@@ -7,7 +7,7 @@ A security package for Umbraco 7. Lock down an Umbraco website from viewers. Onl
 
 ## Getting started
 
-This package is supported on Umbraco 7.5+.
+This package is supported on Umbraco 7.1.2.
 
 ### Installation
 SiteLock is available from Our Umbraco, NuGet, or as a manual download directly from GitHub.
