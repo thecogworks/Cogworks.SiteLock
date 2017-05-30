@@ -35,8 +35,8 @@
     <Compile Include="Web\Configuration\SiteLockConfiguration.cs" />
     <Compile Include="Web\Events\ModuleLoader.cs" />
     <Compile Include="Web\Helpers\RequestHelper.cs" />
-    <Compile Include="Web\Modules\RequestProcessor.cs" />
-    <Compile Include="Web\Modules\SiteLockModule.cs" />
+    <Compile Include="Web\HttpModules\RequestProcessor.cs" />
+    <Compile Include="Web\HttpModules\SiteLockModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

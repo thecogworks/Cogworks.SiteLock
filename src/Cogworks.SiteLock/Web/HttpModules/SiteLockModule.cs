@@ -4,7 +4,7 @@ using System;
 using System.Web;
 
 
-namespace Cogworks.SiteLock.Web.Modules
+namespace Cogworks.SiteLock.Web.HttpModules
 {
     public class SiteLockModule : IHttpModule
     {

@@ -3,7 +3,7 @@ using Cogworks.SiteLock.Web.Configuration;
 using Cogworks.SiteLock.Web.Helpers;
 using System.Web;
 
-namespace Cogworks.SiteLock.Web.Modules
+namespace Cogworks.SiteLock.Web.HttpModules
 {
     public class RequestProcessor
     {

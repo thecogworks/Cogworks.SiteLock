@@ -7,7 +7,7 @@ namespace Cogworks.SiteLock.Web.Events
     {
         public static void LoadModule()
         {
-            HttpApplication.RegisterModule(typeof(Cogworks.SiteLock.Web.Modules.SiteLockModule));
+            HttpApplication.RegisterModule(typeof(Cogworks.SiteLock.Web.HttpModules.SiteLockModule));
         }
     }
 }

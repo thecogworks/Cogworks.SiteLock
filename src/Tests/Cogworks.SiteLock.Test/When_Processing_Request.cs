@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Cogworks.SiteLock.Web.Modules;
+using Cogworks.SiteLock.Web.HttpModules;
 using Moq;
 using Cogworks.SiteLock.Web.Configuration;
 using System.Web;
