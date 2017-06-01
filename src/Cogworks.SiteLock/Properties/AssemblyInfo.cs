@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Cogworks.SiteLock")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A security package for Umbraco 7. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public website.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Cogworks")]
 [assembly: AssemblyProduct("Umbraco SiteLock")]

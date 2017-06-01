@@ -18,6 +18,5 @@
   </metadata>
   <files>
     <file src="Web\UI\**\*.*" target="content" />
-    <file src="bin\Release\Cogworks.SiteLock.dll" target="lib" />
   </files>
 </package>

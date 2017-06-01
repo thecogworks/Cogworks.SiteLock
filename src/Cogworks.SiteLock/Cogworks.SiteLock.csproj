@@ -205,7 +205,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web\UI\403-sample.html" />
+    <None Include="Web\UI\403-sample.html" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
