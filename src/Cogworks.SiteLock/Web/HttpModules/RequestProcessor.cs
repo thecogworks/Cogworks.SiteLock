@@ -20,9 +20,12 @@ namespace Cogworks.SiteLock.Web.HttpModules
         public void ProcessRequest(HttpContextBase httpContext)
         {
             var requestUri = httpContext.Request.Url;
-            var absolutePath = requestUri.AbsolutePath.ToLowerInvariant();
+            var absolutePath = requestUri.AbsolutePath;
+            var urlReferrer = httpContext.Request.UrlReferrer;
 
-            if (RequestHelper.IsIgnoredPath(_config, absolutePath)) { return; }
+            if (RequestHelper.IsAllowedPath(_config, absolutePath)) { return; }
+
+            if (RequestHelper.IsUmbracoAllowedPath(_config, absolutePath, urlReferrer)) { return; }
 
             if (!RequestHelper.IsLockedDomain(_config, requestUri.Host)) { return; }
 

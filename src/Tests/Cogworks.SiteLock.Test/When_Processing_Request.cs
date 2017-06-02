@@ -29,17 +29,18 @@ namespace Cogworks.SiteLock.Test
         public When_Processing_Request()
         {
             _configMock = new Mock<ISiteLockConfiguration>();
+            _configMock.Setup(x => x.GetAllowedPaths()).Returns(new List<string>());
+
             _authCheckerMock = new Mock<IAuthenticationChecker>();
             _requestProcessor = new RequestProcessor(_configMock.Object, _authCheckerMock.Object);
             _contextMock = new Mock<HttpContextBase>();
 
             _httpRequestMock = new Mock<HttpRequestBase>();
             _httpResponseMock = new Mock<HttpResponseBase>();
+
             _uriStub = new Uri("http://thecogworks.com" + AbsolutePath);
-
-            _configMock.Setup(x => x.GetIgnoredPaths()).Returns(new List<string>());
-
             _httpRequestMock.Setup(x => x.Url).Returns(_uriStub);
+
             _contextMock.Setup(x => x.Request).Returns(_httpRequestMock.Object);
             _contextMock.Setup(x => x.Response).Returns(_httpResponseMock.Object);
         }
@@ -48,7 +49,7 @@ namespace Cogworks.SiteLock.Test
         [Fact]
         public void AbsolutePath_Exists_In_Configuration_Then_Allow_Request_To_Continue()
         {
-            _configMock.Setup(x => x.GetIgnoredPaths()).Returns(new List<string> { AbsolutePath });
+            _configMock.Setup(x => x.GetAllowedPaths()).Returns(new List<string> { AbsolutePath });
 
             _requestProcessor.ProcessRequest(_contextMock.Object);
         }
@@ -92,6 +93,50 @@ namespace Cogworks.SiteLock.Test
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
             _requestProcessor.ProcessRequest(_contextMock.Object);
+        }
+
+
+        [Fact]
+        public void Url_Is_Umbraco_Url_Then_Allow_Request_To_Continue()
+        {
+            _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
+
+            var absoluteUrl = new Uri("http://thecogworks.com/dependencyhandler.axd");
+            _httpRequestMock.Setup(x => x.Url).Returns(absoluteUrl);
+
+            _httpRequestMock.Setup(x => x.UrlReferrer).Returns(new Uri("http://thecogworks.com/umbraco/"));
+
+            _requestProcessor.ProcessRequest(_contextMock.Object);
+        }
+
+
+        [Fact]
+        public void Referrer_Is_DependencyHandler_Then_Allow_Request_To_Continue()
+        {
+            _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
+
+            var absoluteUrl = new Uri("http://thecogworks.com/umbraco/logo.png");
+            _httpRequestMock.Setup(x => x.Url).Returns(absoluteUrl);
+
+            _httpRequestMock.Setup(x => x.UrlReferrer).Returns(new Uri("http://thecogworks.com/dependencyhandler.axd"));
+
+            _requestProcessor.ProcessRequest(_contextMock.Object);
+        }
+
+
+        [Fact]
+        public void Is_Umbraco_Api_Url_And_User_Not_LoggedIn_Then_Throw_Exception()
+        {
+            _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
+
+            var absoluteUrl = new Uri("http://thecogworks.com/umbraco/api/");
+            _httpRequestMock.Setup(x => x.Url).Returns(absoluteUrl);
+
+            _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(false);
+
+            Assert.Throws<HttpException>(() => _requestProcessor.ProcessRequest(_contextMock.Object));
+            _httpResponseMock.VerifySet(x => x.StatusCode = 403);
         }
     }
 }

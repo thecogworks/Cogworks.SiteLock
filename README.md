@@ -45,19 +45,19 @@ Example:
 </lockedDomains>
 ~~~
 
-###Ignored Paths
-This section of the configuration allows you to specify paths which can be ignored. 
+###Allowed Paths
+This section of the configuration allows you to specify paths which can be allowed. 
 
 Example:
 ~~~xml
-<ignoredPaths>
-	<path>/umbraco</path>
+<allowedPaths>
+	<path>^/news(.*)</path>
 	<path>/403.html</path>
-</ignoredPaths>
+</allowedPaths>
 ~~~
   
 ####Important  
-Note that the paths are actually wildcards. So in the example above, we ignore paths which "start with" /umbraco. This allows for various routes such as /umbraco/api/myapi/ to pass through. 
+Note that the paths are actually regular expressions. So in the example above, we allow paths which "start with" /news/. 
 
 Changes to /config/SiteLock.config will require an application restart, as the config file cached at startup.   
 	
