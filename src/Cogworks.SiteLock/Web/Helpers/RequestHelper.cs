@@ -19,7 +19,7 @@ namespace Cogworks.SiteLock.Web.Helpers
 
             if (urlReferrerLowered.StartsWith("/dependencyhandler.axd")) { return true; }
 
-            var isUmbracoUrl = urlReferrerLowered.StartsWith("/umbraco/");
+            var isUmbracoUrl = urlReferrerLowered.StartsWith("/umbraco");
 
             return isUmbracoUrl;
         }
