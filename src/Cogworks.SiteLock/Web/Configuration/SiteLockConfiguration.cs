@@ -9,13 +9,13 @@ namespace Cogworks.SiteLock.Web.Configuration
     public interface ISiteLockConfiguration
     {
         List<string> GetLockedDomains();
-        List<string> GetIgnoredPaths();
+        List<string> GetAllowedPaths();
     }
 
     public class SiteLockConfiguration : ISiteLockConfiguration
     {
         private static string DomainsKey = typeof(SiteLockConfiguration) + "_domains";
-        private static string IgnoredPathsKey = typeof(SiteLockConfiguration) + "_ignoredPaths";
+        private static string AllowedPathsKey = typeof(SiteLockConfiguration) + "_allowedPaths";
 
 
         public List<string> GetLockedDomains()
@@ -34,15 +34,15 @@ namespace Cogworks.SiteLock.Web.Configuration
 
 
 
-        public List<string> GetIgnoredPaths()
+        public List<string> GetAllowedPaths()
         {
-            var value = HttpRuntime.Cache[IgnoredPathsKey] as List<string>;
+            var value = HttpRuntime.Cache[AllowedPathsKey] as List<string>;
 
             if (value == null)
             {
-                value = GetValues("ignoredPaths", "path");
+                value = GetValues("allowedPaths", "path");
 
-                HttpRuntime.Cache.Insert(IgnoredPathsKey, value, null);
+                HttpRuntime.Cache.Insert(AllowedPathsKey, value, null);
             }
 
             return value;
@@ -54,7 +54,7 @@ namespace Cogworks.SiteLock.Web.Configuration
         {
             var doc = XDocument.Load(HostingEnvironment.MapPath("/config/SiteLock.config"));
 
-            var value = doc.Root.Element(containerName).Elements(elementName).Select(x => x.Value).ToList();
+            var value = doc.Root.Element(containerName).Elements(elementName).Select(x => x.Value.Trim()).ToList();
 
             return value;
         }
