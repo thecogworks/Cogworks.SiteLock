@@ -10,6 +10,7 @@ namespace Cogworks.SiteLock.Web.Configuration
     {
         List<string> GetLockedDomains();
         List<string> GetAllowedPaths();
+        void AppendAllowedPath(string absolutePathLowered);
     }
 
     public class SiteLockConfiguration : ISiteLockConfiguration
@@ -48,6 +49,17 @@ namespace Cogworks.SiteLock.Web.Configuration
             return value;
         }
 
+
+        public void AppendAllowedPath(string absolutePathLowered)
+        {
+            var allowedPaths = GetAllowedPaths();
+
+            var hasAbsolutePath = allowedPaths.Contains(absolutePathLowered);
+            if (!hasAbsolutePath)
+            {
+                allowedPaths.Add(absolutePathLowered);
+            }
+        }
 
 
         private List<string> GetValues(string containerName, string elementName)

@@ -25,6 +25,26 @@ namespace Cogworks.SiteLock.Web.Helpers
         }
 
 
+        internal static bool IsAllowedReferrerPath(ISiteLockConfiguration config, string absolutePath, Uri urlReferrer)
+        {
+            if (urlReferrer == null) { return false; }
+
+            var absolutePathLowered = absolutePath.ToLowerInvariant();
+
+            var urlReferrerLowered = urlReferrer.AbsolutePath.ToLowerInvariant();
+
+            var isAllowedReferrer = IsAllowedPath(config, urlReferrerLowered);
+
+            if (isAllowedReferrer)
+            {
+                // handles css files linking to images.
+                config.AppendAllowedPath(absolutePathLowered);
+            }
+
+            return isAllowedReferrer;
+        }
+
+
 
         internal static bool IsAllowedPath(ISiteLockConfiguration config, string absolutePath)
         {

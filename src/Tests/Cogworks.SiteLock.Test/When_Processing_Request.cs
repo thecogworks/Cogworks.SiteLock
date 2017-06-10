@@ -56,6 +56,25 @@ namespace Cogworks.SiteLock.Test
 
 
         [Fact]
+        public void Referrer_Is_Allowed_Path_Then_Append_AbsolutePath_So_That_Linked_Assets_Can_Be_Served_And_Then_Allow_Request_To_Continue()
+        {
+            const string cssPath = "/css/main.css";
+            const string allowedPath = "/an-allowed-path/";
+
+            _configMock.Setup(x => x.GetAllowedPaths()).Returns(new List<string> { allowedPath });
+
+            _httpRequestMock.Setup(x => x.UrlReferrer).Returns(new Uri("http://thecogworks.com" + allowedPath));
+
+            _uriStub = new Uri("http://thecogworks.com" + cssPath);
+            _httpRequestMock.Setup(x => x.Url).Returns(_uriStub);
+
+            _requestProcessor.ProcessRequest(_contextMock.Object);
+
+            _configMock.Verify(x => x.AppendAllowedPath(cssPath));
+        }
+
+
+        [Fact]
         public void Wildcard_Exists_In_Configuration_And_User_Not_LoggedIn_Then_Throw_Exception()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "*" });
@@ -64,6 +83,7 @@ namespace Cogworks.SiteLock.Test
             Assert.Throws<HttpException>(() => _requestProcessor.ProcessRequest(_contextMock.Object));
             _httpResponseMock.VerifySet(x => x.StatusCode = 403);
         }
+
 
         [Fact]
         public void Wildcard_Exists_In_Configuration_And_User_Is_LoggedIn_Then_Allow_Request_To_Continue()

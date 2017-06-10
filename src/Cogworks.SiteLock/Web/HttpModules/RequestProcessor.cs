@@ -23,6 +23,8 @@ namespace Cogworks.SiteLock.Web.HttpModules
             var absolutePath = requestUri.AbsolutePath;
             var urlReferrer = httpContext.Request.UrlReferrer;
 
+            if (RequestHelper.IsAllowedReferrerPath(_config, absolutePath, urlReferrer)) { return; }
+
             if (RequestHelper.IsAllowedPath(_config, absolutePath)) { return; }
 
             if (RequestHelper.IsUmbracoAllowedPath(_config, absolutePath, urlReferrer)) { return; }
