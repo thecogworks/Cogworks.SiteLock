@@ -20,13 +20,13 @@ To [install from NuGet](https://www.nuget.org/packages/Cogworks.SiteLock/), run 
 
     PM> Install-Package Cogworks.SiteLock
 	
-##How it works
+## How it works
 SiteLock is simply a module which is loaded dymically at runtime. It inspects the domain of each request, and then either allows it, or throws a HttpException with a status code of 403.
 	
 ## Usage
 After installing the package, you'll be able to lock any website via /config/SiteLock.config.
 
-###Locked Domains
+### Locked Domains
 This section of the configuration specifies specific domains to be locked in the Umbraco instance.
 
 Example:
@@ -45,7 +45,7 @@ Example:
 </lockedDomains>
 ~~~
 
-###Allowed Paths
+### Allowed Paths
 This section of the configuration allows you to specify paths which can be allowed. 
 
 Example:
@@ -56,7 +56,7 @@ Example:
 </allowedPaths>
 ~~~
   
-####Important  
+#### Important  
 Note that the paths are actually regular expressions. So in the example above, we allow paths which "start with" /news/. 
 
 Changes to /config/SiteLock.config will require an application restart, as the config file cached at startup.   
