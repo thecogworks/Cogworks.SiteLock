@@ -1,4 +1,4 @@
-# Umbraco SiteLock
+# Cogworks.SiteLock
 
 [![NuGet release](https://img.shields.io/nuget/v/Cogworks.SiteLock.svg)](https://www.nuget.org/packages/Cogworks.SiteLock)
 [![Our Umbraco project page](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/website-utilities/sitelock/)

@@ -4,7 +4,7 @@
   "company": "Cogworks",
   "product": "Umbraco SiteLock",
   "copyright": "Copyright © 2017",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "informationalVersion": null,
-  "fileVersion": "1.0.0-alpha"
+  "fileVersion": "1.0.0"
 }
