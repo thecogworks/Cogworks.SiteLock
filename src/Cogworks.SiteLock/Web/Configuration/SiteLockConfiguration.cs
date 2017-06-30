@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
@@ -62,13 +63,37 @@ namespace Cogworks.SiteLock.Web.Configuration
         }
 
 
+        public bool IsEnabled()
+        {
+            var doc = GetDocument();
+
+            var enabledAttribute = doc.Root.Attribute("enabled");
+
+            if (enabledAttribute == null)
+            {
+                return true;
+            }
+
+            return bool.Parse(enabledAttribute.Value);
+        }
+
+
+
         private List<string> GetValues(string containerName, string elementName)
         {
-            var doc = XDocument.Load(HostingEnvironment.MapPath("/config/SiteLock.config"));
+            var doc = GetDocument();
 
             var value = doc.Root.Element(containerName).Elements(elementName).Select(x => x.Value.Trim()).ToList();
 
             return value;
+        }
+
+
+        private XDocument GetDocument()
+        {
+            var doc = XDocument.Load(HostingEnvironment.MapPath("/config/SiteLock.config"));
+
+            return doc;
         }
     }
 }
