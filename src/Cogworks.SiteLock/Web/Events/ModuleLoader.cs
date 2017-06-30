@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Cogworks.SiteLock.Web.Configuration;
+using System.Web;
 
 [assembly: PreApplicationStartMethod(typeof(Cogworks.SiteLock.Web.Events.ModuleLoader), "LoadModule")]
 namespace Cogworks.SiteLock.Web.Events
@@ -7,7 +8,12 @@ namespace Cogworks.SiteLock.Web.Events
     {
         public static void LoadModule()
         {
-            HttpApplication.RegisterModule(typeof(Cogworks.SiteLock.Web.HttpModules.SiteLockModule));
+            var config = new SiteLockConfiguration();
+
+            if (config.IsEnabled())
+            {
+                HttpApplication.RegisterModule(typeof(Cogworks.SiteLock.Web.HttpModules.SiteLockModule));
+            }
         }
     }
 }
