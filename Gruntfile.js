@@ -26,6 +26,22 @@ module.exports = function(grunt) {
                 releaseFilesDir + '**/*.*'
             ]
         },
+		
+		msbuild: {
+			dev: {
+				src: [projectDir + pkg.name + '.csproj'],
+				options: {
+					projectConfiguration: 'Release',
+					targets: ['Clean', 'Rebuild'],
+					buildParameters: {
+						PostBuildEvent: ''
+					}
+				}
+			}
+		},
+		
+		
+		
         copy: {
             bacon: {
                 files: [
@@ -84,13 +100,14 @@ module.exports = function(grunt) {
         }
     });
 
+	grunt.loadNpmTasks('grunt-msbuild');
     grunt.loadNpmTasks('grunt-umbraco-package');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-nuget');
     grunt.loadNpmTasks('grunt-zip');
 
-    grunt.registerTask('dev', ['copy', 'zip', 'umbracoPackage', 'nugetpack']);
+    grunt.registerTask('dev', ['clean', 'msbuild', 'copy', 'zip', 'umbracoPackage', 'nugetpack']);
 
     grunt.registerTask('default', ['dev']);
 

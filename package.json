@@ -1,6 +1,6 @@
 {
   "name": "Cogworks.SiteLock",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "url": "https://github.com/thecogworks/sitelock",
   "license": {
     "name": "MIT",
@@ -17,6 +17,7 @@
     "grunt-nuget": "~0.3.0",
     "grunt-zip": "~0.17.0",
     "grunt-umbraco-package": "1.0.0",
-    "grunt-contrib-clean": "^0.6.0"
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-msbuild": "^0.4.4"
   }
 }
