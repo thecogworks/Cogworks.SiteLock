@@ -40,7 +40,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Cogworks.SiteLock.nuspec">
       <SubType>Designer</SubType>
     </None>
@@ -205,7 +207,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web\UI\403-sample.html" />
+    <None Include="Web\UI\ErrorPages\403-sample.html" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
