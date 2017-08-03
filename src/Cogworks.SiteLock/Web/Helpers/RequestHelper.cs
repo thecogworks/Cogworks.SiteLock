@@ -50,7 +50,7 @@ namespace Cogworks.SiteLock.Web.Helpers
         {
             var absolutePathLowered = absolutePath.ToLowerInvariant();
 
-            var allowedPaths = config.GetAllowedPaths();
+            var allowedPaths = config.GetAllowedPaths().Select(path => path.ToLowerInvariant());
 
             foreach (var item in allowedPaths)
             {
