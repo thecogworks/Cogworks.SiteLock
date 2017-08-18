@@ -49,6 +49,7 @@ namespace Cogworks.SiteLock.Test
         [Fact]
         public void AbsolutePath_Exists_In_Configuration_Then_Allow_Request_To_Continue()
         {
+            _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string>());
             _configMock.Setup(x => x.GetAllowedPaths()).Returns(new List<string> { AbsolutePath });
 
             _requestProcessor.ProcessRequest(_contextMock.Object);
@@ -60,6 +61,8 @@ namespace Cogworks.SiteLock.Test
         {
             const string cssPath = "/css/main.css";
             const string allowedPath = "/an-allowed-path/";
+
+            _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
 
             _configMock.Setup(x => x.GetAllowedPaths()).Returns(new List<string> { allowedPath });
 
@@ -119,6 +122,8 @@ namespace Cogworks.SiteLock.Test
         [Fact]
         public void Url_Is_Umbraco_Url_Then_Allow_Request_To_Continue()
         {
+            _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
             var absoluteUrl = new Uri("http://thecogworks.com/dependencyhandler.axd");
@@ -133,6 +138,8 @@ namespace Cogworks.SiteLock.Test
         [Fact]
         public void Referrer_Is_DependencyHandler_Then_Allow_Request_To_Continue()
         {
+            _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
             var absoluteUrl = new Uri("http://thecogworks.com/umbraco/logo.png");
