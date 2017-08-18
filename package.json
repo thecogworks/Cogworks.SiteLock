@@ -10,6 +10,7 @@
     "name": "Cogworks",
     "url": "http://www.thecogworks.com/"
   },
+  "iconUrl" : "https://raw.githubusercontent.com/thecogworks/sitelock/master/docs/img/sitelock.png",
   "readme": "A security package for Umbraco 7. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public site. ",
   "devDependencies": {
 	"grunt": "~0.4.5",
