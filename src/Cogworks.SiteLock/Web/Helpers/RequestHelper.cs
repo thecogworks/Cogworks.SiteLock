@@ -46,6 +46,15 @@ namespace Cogworks.SiteLock.Web.Helpers
 
 
 
+        internal static bool IsAllowedIP(ISiteLockConfiguration config, string userHostAddress)
+        {
+            var ips = config.GetAllowedIPs();
+
+            return ips.Contains(userHostAddress);
+        }
+
+
+
         internal static bool IsAllowedPath(ISiteLockConfiguration config, string absolutePath)
         {
             var absolutePathLowered = absolutePath.ToLowerInvariant();

@@ -25,6 +25,8 @@ namespace Cogworks.SiteLock.Web.HttpModules
 
             if (RequestHelper.IsLockedDomain(_config, requestUri.Host))
             {
+                if (RequestHelper.IsAllowedIP(_config, httpContext.Request.UserHostAddress)) { return; }
+
                 if (RequestHelper.IsAllowedReferrerPath(_config, absolutePath, urlReferrer)) { return; }
 
                 if (RequestHelper.IsAllowedPath(_config, absolutePath)) { return; }
