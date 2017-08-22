@@ -41,9 +41,23 @@ namespace Cogworks.SiteLock.Test
             _uriStub = new Uri("http://thecogworks.com" + AbsolutePath);
             _httpRequestMock.Setup(x => x.Url).Returns(_uriStub);
 
+            _httpRequestMock.Setup(x => x.UserHostAddress).Returns("8.8.8.8");
+
             _contextMock.Setup(x => x.Request).Returns(_httpRequestMock.Object);
             _contextMock.Setup(x => x.Response).Returns(_httpResponseMock.Object);
         }
+
+
+
+        [Fact]
+        public void IP_Exists_In_Configuration_Then_Allow_Request_To_Continue()
+        {
+            _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string> { "8.8.8.8" });
+
+            _requestProcessor.ProcessRequest(_contextMock.Object);
+        }
+
 
 
         [Fact]
@@ -63,6 +77,7 @@ namespace Cogworks.SiteLock.Test
             const string allowedPath = "/an-allowed-path/";
 
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
 
             _configMock.Setup(x => x.GetAllowedPaths()).Returns(new List<string> { allowedPath });
 
@@ -81,7 +96,11 @@ namespace Cogworks.SiteLock.Test
         public void Wildcard_Exists_In_Configuration_And_User_Not_LoggedIn_Then_Throw_Exception()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "*" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
+
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(false);
+
+
 
             Assert.Throws<HttpException>(() => _requestProcessor.ProcessRequest(_contextMock.Object));
             _httpResponseMock.VerifySet(x => x.StatusCode = 403);
@@ -92,6 +111,8 @@ namespace Cogworks.SiteLock.Test
         public void Wildcard_Exists_In_Configuration_And_User_Is_LoggedIn_Then_Allow_Request_To_Continue()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "*" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
+
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
             _requestProcessor.ProcessRequest(_contextMock.Object);
@@ -102,6 +123,8 @@ namespace Cogworks.SiteLock.Test
         public void Domain_Exists_In_Configuration_And_User_Not_LoggedIn_Then_Throw_Exception()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
+
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(false);
 
             Assert.Throws<HttpException>(() => _requestProcessor.ProcessRequest(_contextMock.Object));
@@ -113,6 +136,8 @@ namespace Cogworks.SiteLock.Test
         public void Domain_Exists_In_Configuration_And_User_Is_LoggedIn_Then_Allow_Request_To_Continue()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
+
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
             _requestProcessor.ProcessRequest(_contextMock.Object);
@@ -123,6 +148,7 @@ namespace Cogworks.SiteLock.Test
         public void Url_Is_Umbraco_Url_Then_Allow_Request_To_Continue()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
 
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
@@ -139,6 +165,7 @@ namespace Cogworks.SiteLock.Test
         public void Referrer_Is_DependencyHandler_Then_Allow_Request_To_Continue()
         {
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
 
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(true);
 
@@ -160,6 +187,7 @@ namespace Cogworks.SiteLock.Test
             _httpRequestMock.Setup(x => x.Url).Returns(absoluteUrl);
 
             _configMock.Setup(x => x.GetLockedDomains()).Returns(new List<string> { "thecogworks.com" });
+            _configMock.Setup(x => x.GetAllowedIPs()).Returns(new List<string>());
             _authCheckerMock.Setup(x => x.IsAuthenticated(_contextMock.Object)).Returns(false);
 
             Assert.Throws<HttpException>(() => _requestProcessor.ProcessRequest(_contextMock.Object));

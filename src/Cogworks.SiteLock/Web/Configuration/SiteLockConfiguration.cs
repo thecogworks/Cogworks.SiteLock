@@ -12,13 +12,29 @@ namespace Cogworks.SiteLock.Web.Configuration
         List<string> GetLockedDomains();
         List<string> GetAllowedPaths();
         void AppendAllowedPath(string absolutePathLowered);
+        List<string> GetAllowedIPs();
     }
 
     public class SiteLockConfiguration : ISiteLockConfiguration
     {
         private static string DomainsKey = typeof(SiteLockConfiguration) + "_domains";
         private static string AllowedPathsKey = typeof(SiteLockConfiguration) + "_allowedPaths";
+        private static string AllowedIpsKey = typeof(SiteLockConfiguration) + "_allowedIps";
 
+
+        public List<string> GetAllowedIPs()
+        {
+            var value = HttpRuntime.Cache[AllowedIpsKey] as List<string>;
+
+            if (value == null)
+            {
+                value = GetValues("allowedIps", "ip");
+
+                HttpRuntime.Cache.Insert(AllowedIpsKey, value, null);
+            }
+
+            return value;
+        }
 
         public List<string> GetLockedDomains()
         {
@@ -95,5 +111,7 @@ namespace Cogworks.SiteLock.Web.Configuration
 
             return doc;
         }
+
+     
     }
 }
