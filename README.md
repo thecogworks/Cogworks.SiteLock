@@ -55,10 +55,23 @@ Example:
 	<path>/403.html</path>
 </allowedPaths>
 ~~~
-  
+
 #### Important  
 Note that the paths are actually regular expressions. So in the example above, we allow paths which "start with" /news/. 
 
+
+### Allowed IPs
+This section of the configuration allows you to specify IPs which can be allowed. 
+
+Example:
+~~~xml
+<allowedIps>
+	<ip>127.0.0.1</ip>
+</allowedIps>
+~~~
+  
+  
+  
 Changes to /config/SiteLock.config will require an application restart, as the config file cached at startup.   
 	
 ### Integration
