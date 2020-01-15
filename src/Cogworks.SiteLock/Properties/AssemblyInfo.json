@@ -1,10 +1,10 @@
 {
   "title": "Cogworks.SiteLock",
-  "description": "A security package for Umbraco 7. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public website.",
+  "description": "A security package for Umbraco. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public website.",
   "company": "Cogworks",
   "product": "Umbraco SiteLock",
-  "copyright": "Copyright © 2017",
-  "version": "1.2.0",
+  "copyright": "Copyright © 2020",
+  "version": "2.0.0",
   "informationalVersion": null,
-  "fileVersion": "1.2.0"
+  "fileVersion": "2.0.0"
 }
