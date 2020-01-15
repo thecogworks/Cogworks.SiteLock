@@ -1,5 +1,5 @@
 ﻿using System.Web;
-using Umbraco.Core.Security;
+using Umbraco.Web.Security;
 
 namespace Cogworks.SiteLock.Web.Authentication
 {
