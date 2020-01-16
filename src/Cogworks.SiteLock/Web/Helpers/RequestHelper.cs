@@ -1,6 +1,7 @@
 ﻿using Cogworks.SiteLock.Web.Configuration;
-using System.Linq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Cogworks.SiteLock.Web.Helpers
@@ -9,31 +10,30 @@ namespace Cogworks.SiteLock.Web.Helpers
     {
         internal static bool IsUmbracoAllowedPath(ISiteLockConfiguration config, string absolutePath, Uri urlReferrer)
         {
-            var absolutePathLowered = absolutePath.ToLowerInvariant();
+            string absolutePathLowered = absolutePath.ToLowerInvariant();
 
             if (absolutePathLowered == "/umbraco/default") { return true; }
 
             if (urlReferrer == null) { return false; }
 
-            var urlReferrerLowered = urlReferrer.AbsolutePath.ToLowerInvariant();
+            string urlReferrerLowered = urlReferrer.AbsolutePath.ToLowerInvariant();
 
             if (urlReferrerLowered.StartsWith("/dependencyhandler.axd")) { return true; }
 
-            var isUmbracoUrl = urlReferrerLowered.StartsWith("/umbraco");
+            bool isUmbracoUrl = urlReferrerLowered.StartsWith("/umbraco");
 
             return isUmbracoUrl;
         }
-
 
         internal static bool IsAllowedReferrerPath(ISiteLockConfiguration config, string absolutePath, Uri urlReferrer)
         {
             if (urlReferrer == null) { return false; }
 
-            var absolutePathLowered = absolutePath.ToLowerInvariant();
+            string absolutePathLowered = absolutePath.ToLowerInvariant();
 
-            var urlReferrerLowered = urlReferrer.AbsolutePath.ToLowerInvariant();
+            string urlReferrerLowered = urlReferrer.AbsolutePath.ToLowerInvariant();
 
-            var isAllowedReferrer = IsAllowedPath(config, urlReferrerLowered);
+            bool isAllowedReferrer = IsAllowedPath(config, urlReferrerLowered);
 
             if (isAllowedReferrer)
             {
@@ -44,50 +44,34 @@ namespace Cogworks.SiteLock.Web.Helpers
             return isAllowedReferrer;
         }
 
-
-
         internal static bool IsAllowedIP(ISiteLockConfiguration config, string userHostAddress)
         {
-            var ips = config.GetAllowedIPs();
+            List<string> ips = config.GetAllowedIPs();
 
             return ips.Contains(userHostAddress);
         }
 
-
-
         internal static bool IsAllowedPath(ISiteLockConfiguration config, string absolutePath)
         {
-            var absolutePathLowered = absolutePath.ToLowerInvariant();
+            string absolutePathLowered = absolutePath.ToLowerInvariant();
 
-            var allowedPaths = config.GetAllowedPaths().Select(path => path.ToLowerInvariant());
+            IEnumerable<string> allowedPaths = config.GetAllowedPaths().Select(path => path.ToLowerInvariant());
 
-            foreach (var item in allowedPaths)
-            {
-                var regex = new Regex(item);
-
-                Match match = regex.Match(absolutePathLowered);
-                if (match.Success)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return allowedPaths.Select(item => new Regex(item)).Select(regex => regex.Match(absolutePathLowered)).Any(match => match.Success);
         }
-
 
         internal static bool IsLockedDomain(ISiteLockConfiguration config, string hostDomain)
         {
-            var domains = config.GetLockedDomains();
+            List<string> domains = config.GetLockedDomains();
 
             if (domains.Any(x => x == "*"))
             {
                 return true;
             }
 
-            var hostDomainLowered = hostDomain.ToLowerInvariant();
+            string hostDomainLowered = hostDomain.ToLowerInvariant();
 
-            var isLockedDomain = domains.Any(x => hostDomainLowered.Contains(x));
+            bool isLockedDomain = domains.Any(x => hostDomainLowered.Contains(x));
 
             return isLockedDomain;
         }

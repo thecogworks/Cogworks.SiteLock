@@ -34,6 +34,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Web\Authentication\AuthenticationChecker.cs" />
+    <Compile Include="Web\Authentication\IAuthenticationChecker.cs" />
+    <Compile Include="Web\Configuration\ISiteLockConfiguration.cs" />
     <Compile Include="Web\Configuration\SiteLockConfiguration.cs" />
     <Compile Include="Web\Events\ModuleLoader.cs" />
     <Compile Include="Web\Helpers\RequestHelper.cs" />

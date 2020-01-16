@@ -3,19 +3,20 @@ using Cogworks.SiteLock.Web.Configuration;
 using System;
 using System.Web;
 
-
 namespace Cogworks.SiteLock.Web.HttpModules
 {
     public class SiteLockModule : IHttpModule
     {
-        public void Dispose() { }
+        public void Dispose()
+        {
+        }
 
         private readonly RequestProcessor _requestProcessor;
 
         public SiteLockModule()
         {
-            var config = new SiteLockConfiguration();
-            var authChecker = new AuthenticationChecker();
+            SiteLockConfiguration config = new SiteLockConfiguration();
+            AuthenticationChecker authChecker = new AuthenticationChecker();
             _requestProcessor = new RequestProcessor(config, authChecker);
         }
 
@@ -24,12 +25,11 @@ namespace Cogworks.SiteLock.Web.HttpModules
             context.PreRequestHandlerExecute += Context_PreRequestHandlerExecute;
         }
 
-
         private void Context_PreRequestHandlerExecute(object sender, EventArgs e)
         {
-            var app = ((HttpApplication)sender);
+            HttpApplication app = ((HttpApplication)sender);
 
-            var httpContextWrapper = new HttpContextWrapper(app.Context);
+            HttpContextWrapper httpContextWrapper = new HttpContextWrapper(app.Context);
             _requestProcessor.ProcessRequest(httpContextWrapper);
         }
     }

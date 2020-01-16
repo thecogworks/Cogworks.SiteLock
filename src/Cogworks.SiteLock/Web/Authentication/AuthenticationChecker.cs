@@ -3,16 +3,16 @@ using Umbraco.Web.Security;
 
 namespace Cogworks.SiteLock.Web.Authentication
 {
-    public interface IAuthenticationChecker
-    {
-        bool IsAuthenticated(HttpContextBase httpContext);
-    }
-
     public class AuthenticationChecker : IAuthenticationChecker
     {
+        /// <summary>
+        /// Checks authentication from HttpContextBase.GetUmbracoAuthTicket()
+        /// </summary>
+        /// <param name="httpContext">HttpContextBase</param>
+        /// <returns>true if authenticated</returns>
         public bool IsAuthenticated(HttpContextBase httpContext)
         {
-            var ticket = httpContext.GetUmbracoAuthTicket();
+            Microsoft.Owin.Security.AuthenticationTicket ticket = httpContext.GetUmbracoAuthTicket();
             return ticket != null;
         }
     }

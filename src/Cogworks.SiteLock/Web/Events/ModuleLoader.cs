@@ -8,7 +8,7 @@ namespace Cogworks.SiteLock.Web.Events
     {
         public static void LoadModule()
         {
-            var config = new SiteLockConfiguration();
+            SiteLockConfiguration config = new SiteLockConfiguration();
 
             if (config.IsEnabled())
             {
