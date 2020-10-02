@@ -36,6 +36,7 @@
     <Compile Include="Web\Authentication\AuthenticationChecker.cs" />
     <Compile Include="Web\Configuration\SiteLockConfiguration.cs" />
     <Compile Include="Web\Events\ModuleLoader.cs" />
+    <Compile Include="Web\Extensions\RequestExtensions.cs" />
     <Compile Include="Web\Helpers\RequestHelper.cs" />
     <Compile Include="Web\HttpModules\RequestProcessor.cs" />
     <Compile Include="Web\HttpModules\SiteLockModule.cs" />
