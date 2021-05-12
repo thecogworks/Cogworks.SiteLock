@@ -1,5 +1,6 @@
 ﻿using Cogworks.SiteLock.Web.Authentication;
 using Cogworks.SiteLock.Web.Configuration;
+using Cogworks.SiteLock.Web.Extensions;
 using Cogworks.SiteLock.Web.Helpers;
 using System.Web;
 
@@ -22,10 +23,11 @@ namespace Cogworks.SiteLock.Web.HttpModules
             var requestUri = httpContext.Request.Url;
             var absolutePath = requestUri.AbsolutePath;
             var urlReferrer = httpContext.Request.UrlReferrer;
+            var ipAddress = httpContext.Request.GetIpAddress();
 
             if (RequestHelper.IsLockedDomain(_config, requestUri.Host))
             {
-                if (RequestHelper.IsAllowedIP(_config, httpContext.Request.UserHostAddress)) { return; }
+                if (RequestHelper.IsAllowedIP(_config, ipAddress)) { return; }
 
                 if (RequestHelper.IsAllowedReferrerPath(_config, absolutePath, urlReferrer)) { return; }
 
