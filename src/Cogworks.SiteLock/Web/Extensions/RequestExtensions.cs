@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Cogworks.Essentials.Extensions;
+using System.Web;
 
 namespace Cogworks.SiteLock.Web.Extensions
 {
@@ -6,20 +7,21 @@ namespace Cogworks.SiteLock.Web.Extensions
     {
         public static string GetIpAddress(this HttpRequestBase request)
         {
-            string ipAddress = request.ServerVariables["CF-Connecting-IP"];
-            if (string.IsNullOrWhiteSpace(ipAddress))
-                ipAddress = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            var ipAddress = request.ServerVariables["CF-Connecting-IP"];
 
-            if (!string.IsNullOrEmpty(ipAddress))
+            if (!ipAddress.HasValue())
             {
-                string[] addresses = ipAddress.Split(',');
-                if (addresses.Length != 0)
-                {
-                    return addresses[0];
-                }
+                ipAddress = request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             }
 
-            return request.UserHostAddress;
+            if (!ipAddress.HasValue())
+            {
+                return request.UserHostAddress;
+            }
+
+            var addresses = ipAddress.Split(',');
+
+            return addresses.Length != 0 ? addresses[0] : request.UserHostAddress;
         }
     }
 }

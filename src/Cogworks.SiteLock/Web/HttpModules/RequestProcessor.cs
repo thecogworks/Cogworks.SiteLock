@@ -1,4 +1,5 @@
-﻿using Cogworks.SiteLock.Web.Authentication;
+﻿using Cogworks.Essentials.Extensions;
+using Cogworks.SiteLock.Web.Authentication;
 using Cogworks.SiteLock.Web.Configuration;
 using Cogworks.SiteLock.Web.Extensions;
 using Cogworks.SiteLock.Web.Helpers;
@@ -8,8 +9,8 @@ namespace Cogworks.SiteLock.Web.HttpModules
 {
     public class RequestProcessor
     {
-        ISiteLockConfiguration _config;
-        IAuthenticationChecker _authChecker;
+        private readonly ISiteLockConfiguration _config;
+        private readonly IAuthenticationChecker _authChecker;
 
         public RequestProcessor(ISiteLockConfiguration config, IAuthenticationChecker authenticationChecker)
         {
@@ -17,32 +18,29 @@ namespace Cogworks.SiteLock.Web.HttpModules
             _authChecker = authenticationChecker;
         }
 
-
         public void ProcessRequest(HttpContextBase httpContext)
         {
             var requestUri = httpContext.Request.Url;
+            if (!requestUri.HasValue()) { return; }
+
             var absolutePath = requestUri.AbsolutePath;
             var urlReferrer = httpContext.Request.UrlReferrer;
             var ipAddress = httpContext.Request.GetIpAddress();
 
-            if (RequestHelper.IsLockedDomain(_config, requestUri.Host))
-            {
-                if (RequestHelper.IsAllowedIP(_config, ipAddress)) { return; }
+            if (!RequestHelper.IsLockedDomain(_config, requestUri.Host)) { return; }
 
-                if (RequestHelper.IsAllowedReferrerPath(_config, absolutePath, urlReferrer)) { return; }
+            if (RequestHelper.IsAllowedIP(_config, ipAddress)) { return; }
 
-                if (RequestHelper.IsAllowedPath(_config, absolutePath)) { return; }
+            if (RequestHelper.IsAllowedReferrerPath(_config, absolutePath, urlReferrer)) { return; }
 
-                if (RequestHelper.IsUmbracoAllowedPath(_config, absolutePath, urlReferrer)) { return; }
+            if (RequestHelper.IsAllowedPath(_config, absolutePath)) { return; }
 
-                // get here if path is not allowed
-                if (!_authChecker.IsAuthenticated(httpContext))
-                {
-                    httpContext.Response.StatusCode = 403;
+            if (RequestHelper.IsUmbracoAllowedPath(_config, absolutePath, urlReferrer)) { return; }
 
-                    throw new HttpException(403, "Locked by Cogworks.SiteLock Module");
-                }
-            }
+            if (_authChecker.IsAuthenticated(httpContext)) { return; }
+
+            httpContext.Response.StatusCode = 403;
+            throw new HttpException(403, "Locked by Cogworks.SiteLock Module");
         }
     }
 }
