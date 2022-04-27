@@ -13,7 +13,7 @@
   "iconUrl": "https://raw.githubusercontent.com/thecogworks/sitelock/master/docs/img/sitelock.png",
   "readme": "A security package for Umbraco. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public site. ",
   "devDependencies": {
-    "grunt": "^1.3.0",
+    "grunt": "^1.5.2",
     "grunt-contrib-clean": "*",
     "grunt-contrib-copy": "*",
     "grunt-msbuild": "*",
