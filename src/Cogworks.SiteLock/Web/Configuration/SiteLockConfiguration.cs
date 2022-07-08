@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
@@ -10,8 +9,11 @@ namespace Cogworks.SiteLock.Web.Configuration
     public interface ISiteLockConfiguration
     {
         List<string> GetLockedDomains();
+
         List<string> GetAllowedPaths();
+
         void AppendAllowedPath(string absolutePathLowered);
+
         List<string> GetAllowedIPs();
     }
 
@@ -20,7 +22,6 @@ namespace Cogworks.SiteLock.Web.Configuration
         private static string DomainsKey = typeof(SiteLockConfiguration) + "_domains";
         private static string AllowedPathsKey = typeof(SiteLockConfiguration) + "_allowedPaths";
         private static string AllowedIpsKey = typeof(SiteLockConfiguration) + "_allowedIps";
-
 
         public List<string> GetAllowedIPs()
         {
@@ -50,8 +51,6 @@ namespace Cogworks.SiteLock.Web.Configuration
             return value;
         }
 
-
-
         public List<string> GetAllowedPaths()
         {
             var value = HttpRuntime.Cache[AllowedPathsKey] as List<string>;
@@ -66,7 +65,6 @@ namespace Cogworks.SiteLock.Web.Configuration
             return value;
         }
 
-
         public void AppendAllowedPath(string absolutePathLowered)
         {
             var allowedPaths = GetAllowedPaths();
@@ -77,7 +75,6 @@ namespace Cogworks.SiteLock.Web.Configuration
                 allowedPaths.Add(absolutePathLowered);
             }
         }
-
 
         public bool IsEnabled()
         {
@@ -93,8 +90,6 @@ namespace Cogworks.SiteLock.Web.Configuration
             return bool.Parse(enabledAttribute.Value);
         }
 
-
-
         private List<string> GetValues(string containerName, string elementName)
         {
             var doc = GetDocument();
@@ -104,14 +99,11 @@ namespace Cogworks.SiteLock.Web.Configuration
             return value;
         }
 
-
         private XDocument GetDocument()
         {
             var doc = XDocument.Load(HostingEnvironment.MapPath("/config/SiteLock.config"));
 
             return doc;
         }
-
-     
     }
 }

@@ -14,7 +14,7 @@
     <copyright>$copyright$</copyright>
     <tags>Umbraco Security</tags>
     <dependencies>
-      <dependency id="UmbracoCms.Web" version="8.0.0" />
+      <dependency id="UmbracoCms.Web" version="8.10.0" />
     </dependencies>
   </metadata>
   <files>
