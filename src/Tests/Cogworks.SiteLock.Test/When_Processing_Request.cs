@@ -40,8 +40,10 @@ namespace Cogworks.SiteLock.Test
 
             _uriStub = new Uri("http://thecogworks.com" + AbsolutePath);
             _httpRequestMock.Setup(x => x.Url).Returns(_uriStub);
-
-            _httpRequestMock.Setup(x => x.UserHostAddress).Returns("8.8.8.8");
+            _httpRequestMock.Setup(x => x.ServerVariables).Returns(new System.Collections.Specialized.NameValueCollection{
+                    { "HTTP_X_FORWARDED_FOR", "8.8.8.8, 4.4.4.4:18104" },
+                    { "REMOTE_ADDR", "8.8.8.8" }
+            });
 
             _contextMock.Setup(x => x.Request).Returns(_httpRequestMock.Object);
             _contextMock.Setup(x => x.Response).Returns(_httpResponseMock.Object);
