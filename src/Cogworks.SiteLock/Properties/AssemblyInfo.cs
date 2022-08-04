@@ -4,12 +4,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Cogworks.SiteLock")]
-[assembly: AssemblyDescription("A security package for Umbraco. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public website.")]
+[assembly: AssemblyTitle("SiteLock")]
+[assembly: AssemblyDescription("SiteLock")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Cogworks")]
-[assembly: AssemblyProduct("Umbraco SiteLock")]
-[assembly: AssemblyCopyright("Copyright © 2020")]
+[assembly: AssemblyCompany("The Cogworks Ltd")]
+[assembly: AssemblyProduct("SiteLock")]
+[assembly: AssemblyCopyright("Copyright © 2017 The Cogworks Ltd, and other contributors")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
