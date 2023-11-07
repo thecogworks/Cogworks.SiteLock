@@ -1,6 +1,7 @@
 # Cogworks.SiteLock
 
 [![NuGet release](https://img.shields.io/nuget/v/Cogworks.SiteLock.svg)](https://www.nuget.org/packages/Cogworks.SiteLock)
+[![GitHub release (by tag)](https://img.shields.io/github/v/release/thecogworks/Cogworks.SiteLock)](https://github.com/thecogworks/Cogworks.SiteLock)
 [![Our Umbraco project page](https://img.shields.io/badge/our-umbraco-orange.svg)](https://our.umbraco.org/projects/website-utilities/sitelock/)
 
 A security package for Umbraco. Lock down an Umbraco website from viewers. Only users who are logged into the backoffice can see the public website.
